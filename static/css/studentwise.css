@@ -1,0 +1,9 @@
+body{
+    background-color: hsl(0, 0%, 98%) !important;
+}
+.sidebar__maroon{
+    background-color: aquamarine;
+}
+.sidebar__pink{
+    background-color: blueviolet;
+}

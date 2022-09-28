@@ -1,0 +1,170 @@
+{% extends parent_template|default:"coreorder/base_coreorder.html" %}
+
+{% block title %}
+  {{ block.super }} - Oder
+{% endblock title %}
+
+
+{% block css %}
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  
+{% endblock css %}
+
+
+
+
+{% block content %}
+
+<div class="container-fluid">
+<div class="row w-100 h-100">
+  <div class="col-sm-0 col-md-3 d-none d-md-flex sidebar__maroon h-100">
+    <h4>Hello</h4>
+  </div>
+  <div class="col-sm-12 col-md-9 sidebar__pink h-100">
+    <!-- navbar -->
+    <div class="row">
+      <!-- context -->
+    </div>
+    <div class="row pt-5 ps-2 pb-5">
+      <div class="col-sm-8">
+        <div class="card card__is__shadow">
+          <div class="card-body">
+            <form action="{% url 'ordetype_assignment_type' %}" method="post">
+              {% csrf_token %}
+              <h3 class="form__title">Paper Type</h3>
+              <div class="form-group">
+                <label for="{{form.student.id_for_label}}">{{form.student.label}}</label>
+                {{form.student}}
+              </div>
+
+
+              <div class="form-group">
+                <label for="{{form.service_type.id_for_label}}">{{form.service_type.label}}</label>
+               <div class="form-check form__check">
+                <div class="form-chcek grouped__label d-flex">
+                  <input type="radio" id="id_service_type" value="Editing & Proofreading" name="service_type" checked="true">
+                  <label for="">Editing & Proofreading</label>
+                </div>
+                <div class="form-chcek grouped__label d-flex">
+                  <input type="radio" id="id_service_type" value="Academic Writing" name="service_type">
+                  <label for="">Academic Writing</label>
+                </div>
+                <div class="form-chcek grouped__label d-flex">
+                  <input type="radio" id="id_service_type" value="Calculations" name="service_type">
+                  <label for="">Calculations</label>
+                </div>
+               </div>
+              </div>
+
+              
+              <div class="form-group">
+                <label for="{{form.service_type.id_for_label}}">
+                  {{form.academic_level.label}} <span class="help">?</span>
+                </label>
+               <div class="form-check form__check">
+                <div class="form-chcek grouped__label d-flex">
+                  <input type="radio" id="id_academic_level" value="high school" name="academic_level" checked="true">
+                  <label for="">High School</label>
+                </div>
+                <div class="form-chcek grouped__label d-flex">
+                  <input type="radio" id="id_academic_level" value="college" name="academic_level">
+                  <label for="">College</label>
+                </div>
+                <div class="form-chcek grouped__label d-flex">
+                  <input type="radio" id="id_academic_level" value="undergraduate" name="academic_level">
+                  <label for="">Undergraduate</label>
+                </div>
+                <div class="form-chcek grouped__label d-flex">
+                  <input type="radio" id="id_academic_level" value="masters" name="academic_level">
+                  <label for="">Masters</label>
+                </div>
+               </div>
+              </div>
+
+              <div class="form-group form__select">
+                <label for="{{form.service_type.id_for_label}}">
+                  {{form.paper_type.label}}
+                </label>
+                <select name="paper_type" id="id_service_type" class="custom-select form-control">
+                    <option value="" selected>Essay</option>
+                    <option value="" selected>File</option>
+                    <option value="" selected>Miovie</option>
+                    <option value="" selected>Work</option>
+                    <option value="" selected>report</option>
+                    <option value="" selected>resume</option>
+                </select>
+              </div>
+
+              <div class="form-group form__select">
+                <label for="{{form.service_type.id_for_label}}">
+                  {{form.subject_area.label}}
+                </label>
+                <select name="paper_type" id="id_service_type" class="custom-select form-control">
+                    <option value="" selected>Essay</option>
+                    <option value="" >File</option>
+                    <option value="" >Miovie</option>
+                    <option value="" >Work</option>
+                    <option value="" >report</option>
+                    <option value="" >resume</option>
+                </select>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12 col-md-8">
+                  <label for="">
+                    <span>-</span>
+                    <input type="number" id="id_pages" name="pages" value="1" disabled>
+                    <span>+</span>
+                  </label>
+                </div>
+                <div class="col">
+                  <span id="pages__display">Pages</span>
+                  <span>&sum</span>
+                  <span id="words__display">words</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="{{form.deadline.id_for_label}}">{{form.deadline.label}}</label>
+                <row>
+                  <div class="col-sm-10 col-md-8">
+                    <input type="datetime" value="" name="deadline" class="form-control" id="id_deadline" autocomplete="false">
+                  </div>
+                </row>
+              </div>
+           
+            <button type="submit">submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4 ps-3">
+        <div class="card">
+          <div class="card-header py-4">
+            <h3>SUMMARY</h3>
+          </div>
+          <div class="display__sumary d-flex px-3 py-4">
+            Context
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+{% endblock content %}
+
+
+{% block js %}
+  
+<script>
+  $( function() {
+      $( "#id_deadline" ).datepicker();
+    } );
+    </script>
+{% endblock js %}

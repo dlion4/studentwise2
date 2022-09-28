@@ -1,0 +1,70 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <title>{% block title %}{% endblock title %}</title>
+        
+        <!-- <link rel="icon" href="assets/images/fav.png" type="image/gif" sizes="20x20"> -->
+    
+        <!-- Jquery Ui CSS -->
+        <link rel="stylesheet" type="text/css" href="{% static 'lib/assets/css/jquery-ui.css' %}"/>
+        <!-- Box Icon CSS -->
+        <link rel="stylesheet" href="{% static 'lib/assets/css/boxicons.min.css' %}">
+        <!-- Bootstrap Icon CSS -->
+        <link rel="stylesheet" href="{% static 'lib/assets/css/bootstrap-icons.css' %}">
+        <!-- Owl Carousel CSS -->
+        <link rel="stylesheet" href="{% static 'lib/assets/css/owl.carousel.min.css' %}">
+        <!-- Magnific Popup CSS -->
+        <link rel="stylesheet" href="{% static 'lib/assets/css/magnific-popup.css' %}">
+        <!-- Odometer CSS -->
+        <link rel="stylesheet" href="{% static 'lib/assets/css/odometer.css' %}">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="{% static 'lib/assets/css/bootstrap.min.css' %}">
+        <!-- Animate CSS -->
+        <link rel="stylesheet" href="{% static 'lib/assets/css/animate.css' %}">
+    
+        
+        <!-- Main CSS -->
+        <link rel="stylesheet" href="{% static 'lib/assets/css/style.css' %}">
+        <!-- Responsive CSS -->
+        <link rel="stylesheet" href="{% static 'lib/assets/css/responsive.css' %}">
+        <link rel="stylesheet" href="{% static 'css/studentwise.css' %}">
+
+
+        {% block css %}
+          
+        {% endblock css %}
+    </head>
+<body>
+
+
+    {% block content %}
+      
+    {% endblock content %}
+      
+    <script src="{% static 'lib/assets/js/jquery-3.6.0.min.js' %}"></script>
+    <!-- Jquery Ui JS -->
+    <script src="{% static 'lib/assets/js/jquery-ui.js' %}"></script>
+    <!-- Bootstrap JS -->		
+    <script src="{% static 'lib/assets/js/bootstrap.min.js' %}"></script>
+    <!-- Owl Carousel JS -->
+    <script src="{% static 'lib/assets/js/owl.carousel.min.js' %}"></script>
+    <!-- Magnific Popup JS -->
+    <script src="{% static 'lib/assets/js/jquery.magnific-popup.min.js' %}"></script>
+    <!-- Wow JS -->
+    <script src="{% static 'lib/assets/js/wow.min.js' %}"></script>
+    <!-- Odometer JS -->
+    <script src="{% static 'lib/assets/js/odometer.min.js' %}"></script>
+    <script src="{% static 'lib/assets/js/viewport.jquery.js' %}"></script>
+    <!-- Main JS -->
+    <script src="{% static 'lib/assets/js/main.js' %}"></script>
+
+
+    {% block js %}
+    
+    {% endblock js %}
+</body>
+</html>

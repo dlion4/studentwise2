@@ -1,0 +1,25 @@
+{% extends parent_template|default:"base.html" %}
+
+{% block title %}
+  {{ block.super }} - Dashboard
+{% endblock title %}
+
+<section>
+{% block account_navigation %}
+<div class="columns is-flex-tablet">
+    <div class="column aside is-invisible-mobile">
+        {% block side-column %}
+          
+        {% endblock side-column %}
+    </div>
+    <div class="column">
+                
+    {% block content %}
+        
+    {% endblock content %}
+    </div>
+</div>
+{% endblock account_navigation %}
+</section>
+   
+
