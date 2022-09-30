@@ -33,9 +33,9 @@
       <div class="col-sm-8">
         <div class="card card__is__shadow">
           <div class="card-body">
-            <form action="{% url 'order_type_assignment_type' %}" method="post">
+            <form action="{{get_absolute_url}}" method="post" enctype="multipart/form-data">
               {% csrf_token %}
-              <h3 class="form__title">Paper Type</h3>
+              <h3 class="form__title">Paper Instructions</h3>
               <div class="form-group">
                 {{form.as_p}}
               </div>

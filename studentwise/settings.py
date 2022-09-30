@@ -1,4 +1,7 @@
 from pathlib import Path
+import json
+from django.core.exceptions import ImproperlyConfigured
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -7,7 +10,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-we&p01%eo90+qb!+7x9+p=991iyrtc_i+u32+)zwd@3vlnd3yr'
+
+
+with open("secrets.json", 'r') as file:
+    file = json.loads(file.read())
+
+
+def get_secrets(setting):
+    try:
+        return file[setting]
+    except ImproperlyConfigured:
+
+        raise ImproperlyConfigured
+
+
+SECRET_KEY = get_secrets("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -25,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "account",
     "coreorder",
+    "payment",
 ]
 
 MIDDLEWARE = [
@@ -109,3 +127,9 @@ MEDIA_URL = 'media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "account.CustomUser"
+
+# RAZORPAY
+
+RAZOR_KEY_ID = get_secrets("RAZOR_KEY_ID")
+RAZOR_KEY_SECRET = get_secrets("RAZOR_KEY_SECRET")
+
