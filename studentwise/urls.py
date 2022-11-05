@@ -5,10 +5,11 @@ from coreorder import urls as coreorder_urls
 from payment import urls as payment_urls
 from django.conf import settings
 from django.conf.urls.static import static
+from django.shortcuts import render
 
 
 def homepage(request):
-    return redirect("order_type_assignment_type")
+    return render(request, "home.html")
 
 
 urlpatterns = [

@@ -1,4 +1,5 @@
 {% extends parent_template|default:"coreorder/base_coreorder.html" %}
+{% load static %}
 
 {% block title %}
   {{ block.super }} - Oder
@@ -7,11 +8,84 @@
 
 {% block css %}
 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-  
+<link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+<style>
+  input{
+    outline: none !important;
+    border: none !important;
+  }
+  input[type="file"]{
+    display: none;
+  }
+  .field__required{
+    color: crimson;
+  }
+  .d_flex{
+    display: flex !important;
+    justify-content: space-between !important;
+  }
+  .form-group .row .d_flex button.btn{
+    min-width: 50px !important;
+    min-height: 30px !important;
+    cursor: pointer;
+    background: #392001;
+    margin: 0 20px;
+    color: #CBD3D9;
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+
+
+  }
+  #id_writer_type,
+  #id_topic,
+  #id_paper_format,
+  #id_plag_report,
+  #id_sources,
+  #id_powerpoint_slides,
+  #id_charts_graphs, 
+  #id_files{
+    border: 1px solid #CBD3D9 !important;
+  }
+  #id_sources,
+  #id_powerpoint_slides,
+  #id_charts_graphs{
+    pointer-events: none;
+  }
+  .files_label{
+    width: 100%;
+    padding: 10px;
+  }
+  .file-upload{
+    width: 100%;
+    position: relative;
+    border: 1px solid #CBD3D9;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  .coupoun{
+    margin: 20px 10px !important;
+  }
+
+
+
+  input[type="checkbox"]{
+  background-color: #2196F3 !important;
+  width: 40px;
+  border: 1px solid #2196F3 !important;
+  height: 40px;
+  pointer-events: all;
+  position: absolute;
+}
+#id_outline{
+  width: 50px;
+  height: 50px;
+  background-color: #2196F3 !important;
+  color: crimson;
+
+}
+</style>
+
 {% endblock css %}
 
 
@@ -20,53 +94,617 @@
 {% block content %}
 
 <div class="container-fluid">
-<div class="row w-100 h-100">
-  <div class="col-sm-0 col-md-3 d-none d-md-flex sidebar__maroon h-100">
-    <h4>Hello</h4>
-  </div>
-  <div class="col-sm-12 col-md-9 sidebar__pink h-100">
-    <!-- navbar -->
-    <div class="row">
-      <!-- context -->
-    </div>
-    <div class="row pt-5 ps-2 pb-5">
-      <div class="col-sm-8">
-        <div class="card card__is__shadow">
-          <div class="card-body">
-            <form action="{{get_absolute_url}}" method="post" enctype="multipart/form-data">
-              {% csrf_token %}
-              <h3 class="form__title">Paper Instructions</h3>
-              <div class="form-group">
-                {{form.as_p}}
+
+  <main class="main-wrapper">
+    <!-- Start Checkout Area  -->
+    <div class="axil-checkout-area axil-section-gap">
+      <div class="container">
+        <form action="" method="post" class="mb--200" id="instruction-form">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-lg-6">
+              <!-- Notice  -->
+
+            
+              <div class="axil-checkout-billing">
+                <h4 class="title mb--40">ORDER DETAILS</h4>
+                <div class="form-group">
+                  <label>{{form.topic.label}}<span class="field__required">*</span></label>
+                      {{form.topic}}
+                </div>
+                <div class="form-group">
+                  <label>{{form.subject_area.label}}<span class="field__required">*</span></label>
+                  {{form.subject_area}}
+                </div>
+                <div class="form-group">
+                  <label for="id_paper_details">{{form.paper_details.label}}
+                    <span class="field__required">*</span>
+                  </label>
+                  {{form.paper_details}}
+                </div>
+                <div class="form-group file-upload">
+                  <div class="d_flex">
+                    <label for="id_files" class="files_label">{{form.files.label}}</label><span id="file_name">No file selected</span>
+                  </div>
+                  {{form.files}}
+                </div>
+
+
+
+
+
+                <div class="form-group different-shippng me-lg-5">
+                  <div class="toggle-bar">
+                    <a href="javascript:void(0)" class="toggle-btn">
+                      <input
+                        type="checkbox"
+                        id="checkbox2"
+                        name="diffrent-ship"
+                      />
+                      <label for="checkbox2"
+                        >Extra detail</label
+                      >
+                    </a>
+                  </div>
+                  <div class="toggle-open">
+
+
+                    <div class="form-group">
+                      <div class="row d_flex">
+                        <div class="col-lg-4">
+                          <label for="id_writer_type">{{form.writer_type.label}}</label>
+                          {{form.writer_type}}
+                        </div>
+
+                        <div class="col-lg-4">
+                          <div class="col-lg-4">
+                            <label for=" {{id_sources}}"> {{form.sources.label}}</label>
+                            <div class="d_flex">
+                              <button type="button " class="btn btn__minus" id="sources btn__minus">&minus;</button>
+                              {{form.sources}}
+                            <button type="button " class="btn btn__plus" id="sources btn__plus">&plus;</button>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+
+                    <div class="form-group">
+                      <div class="row d-flex justify-content-between">
+                        <div class="col-lg-4">
+                          <label for="{{id_powerpoint_slides}}">{{form.powerpoint_slides.label}}</label>
+                            <div class="d_flex">
+                              <button type="button " class="btn btn__minus" id="pp btn__minus">&minus;</button>
+                              {{form.powerpoint_slides}}
+                            <button type="button " class="btn btn__plus" id="pp btn__plus">&plus;</button>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <label for="{{id_charts_graphs}}">{{form.charts_graphs.label}}</label>
+                            <div class="d_flex">
+                              <button type="button " class="btn btn__minus" id="cg btn__minus">&minus;</button>
+                              {{form.charts_graphs}}
+                            <button type="button " class="btn btn__plus" id="cg btn__plus">&plus;</button>
+                            </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+
+                    <div class="form-group">
+
+                      <div class="row d_flex">
+                        <div class="col-lg-4">
+                          <div class="col-lg-4:d-flex">
+                            <label for="id_paper_format">{{form.paper_format.label}}</label>
+                              {{form.paper_format}}
+                          </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                          <div class="col-lg-4:d-flex">
+                            <label for="id_plag_report">{{form.plag_report.label}}</label>
+                              {{form.plag_report}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="row d-flex">
+                        <div class="col-lg-4">
+                          <label for="{{id_grammerly_report}}">{{form.grammerly_report.label}}</label>
+                          {{form.grammerly_report}}
+                        </div>
+
+                        <!-- <div class="col-lg-4">
+                          <label for="{{id_progress_update}}">{{form.progress_update.label}}</label>
+                          {{form.progress_update}}
+                        </div> -->
+
+                        <!-- <div class="col-lg-4">
+                          <label for="{{id_sources_copy}}">{{form.sources_copy.label}}</label>
+                          {{form.sources_copy}}
+                        </div> -->
+                      </div>
+                    </div>
+
+                    <!-- <div class="form-group">
+                      <div class="row d-flex">
+                        <div class="col-lg-4">
+                          <label for="{{id_outline}}">{{form.outline.label}}</label>
+                          {{form.outline}}
+                        </div>
+
+                        <div class="col-lg-4">
+                          <label for="{{id_info_graph}}">{{form.info_graph.label}}</label>
+                          {{form.info_graph}}
+                        </div>
+
+                        <div class="col-lg-4">
+                          <label for="{{id_page_summary}}">{{form.page_summary.label}}</label>
+                          {{form.page_summary}}
+                        </div>
+
+                        <div class="col-lg-4">
+                          <label for="{{id_page_abstract}}">{{form.page_abstract.label}}</label>
+                          {{form.page_abstract}}
+                        </div>
+                      </div>
+                    </div> -->
+
+                  </div>
+                </div>
+
               </div>
-            <button type="submit">submit</button>
-            </form>
+            </div>
+            <div class="col-lg-6">
+              <div class="axil-order-summery order-checkout-summery">
+                <h5 class="title mb--20">Your Order Summary</h5>
+                <div class="summery-table-wrap">
+                  <table class="table summery-table">
+                    <thead>
+                      <tr>
+                        <th>Order</th>
+                        <th>Totals</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="order-product">
+                        <td>SERVICE TYPE</td>
+                        <td>{{order.service_type}}</td>
+                      </tr>
+
+                      <tr class="order-product">
+                        <td>TASK TYPE</td>
+                        <td>{{order.task_type}}</td>
+                      </tr>
+
+                      <tr class="order-product">
+                        <td>ACADEMIC LEVEL</td>
+                        <td>{{order.academic_level}}</td>
+                      </tr>
+
+                      <tr class="order-subtotal">
+                        <td>TOPIC</td>
+                        <td id="topic">Not Selected</td>
+                      </tr>
+
+                      <tr class="order-subtotal">
+                        <td>SUBJECT AREA</td>
+                        <td id="subject">Not selected</td>
+                      </tr>
+
+                      <tr class="order-subtotal">
+                        <td>WRITER TYPE</td>
+                        <td id="writer">Basic Writer</td>
+                      </tr>
+
+                      <tr class="order-subtotal">
+                        <td>REFERENCE SOURCES</td>
+                        <td id="sources">0</td>
+                      </tr>
+
+                      
+                      <tr class="order-subtotal">
+                        <td>POWERPOINT SLIDES</td>
+                        <td id="powerpoints">0</td>
+                      </tr>
+
+                      <tr class="order-subtotal">
+                        <td>CHARTS AND GRAPHS</td>
+                        <td id="graphs">0</td>
+                      </tr>
+
+                      <tr class="order-subtotal">
+                        <td>PAPER FORMAT</td>
+                        <td id="paperformat">MLA</td>
+                      </tr>
+
+                      <tr class="order-subtotal">
+                        <td>PLAG REPORT</td>
+                        <td id="plag">None</td>
+                      </tr>
+
+                      <tr class="order-subtotal">
+                        <td>PAGES</td>
+                        <td>{{order.pages}}</td>
+                      </tr>
+
+                     
+
+                      <tr class="order-total d_flex">
+                        <style>
+                          .budget_span{
+                            font-weight: 800;
+                            color: rgb(25, 4, 48);
+                            transform: translateX(-60px) !important;
+                          }
+                        </style>
+                        <td>TOTAL BUDGET <span class="budget_span">$</span></td>
+                        <div class="total_price">
+                          
+                          <td class="order-total-amount flex-grow-0 ">
+                            ${{form.price}}
+                            <span id="price">{{order.prices}}</span>
+                            <style>
+                              .total_price{
+                                position: relative;
+                                margin-top: 50px !important;
+                              }
+                              #id_price{
+                                /* visibility: hidden; */
+                                transform: translateY(-20px);
+                                float: right;
+                                width: 20%;
+                                position: absolute;
+                                right: 10%;
+                                margin-top: 10px;
+                                margin-bottom: 30px !important;
+                                pointer-events: none;
+                              }
+                            </style> </td>
+                        </div>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                
+                <div class="row coupoun">
+                  <div class="axil-toggle-box">
+
+                    <div class="axil-checkout-coupon toggle-open">
+                      <p>If you have a coupon code, please apply it below.</p>
+                      <div class="row input-group" style="display: flex;">
+                        <div class="col-lg-8">
+                          <input
+                            placeholder="Enter coupon code"
+                            type="text"
+                          />
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="apply-btn">
+                            <button
+                              type="submit"
+                              class="axil-btn btn-bg-success"
+                            >
+                              Apply
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row ms-3 d_flex">
+                  <div class="col-lg-6 mb--2">
+                    <button
+                      type="button"
+                      class="axil-btn btn-bg-secondary checkout-btn"
+                    >
+                      cancel order
+                    </button>
+                  </div>
+                  <div class="col-lg-6">
+                    <button
+                      type="submit"
+                      class="axil-btn btn-bg-primary checkout-btn"
+                    >
+                      Process to payment
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="col-sm-4 ps-3">
-        <div class="card">
-          <div class="card-header py-4">
-            <h3>SUMMARY</h3>
-          </div>
-          <div class="display__sumary d-flex px-3 py-4">
-            Context
-          </div>
-        </div>
+
+
+          
+        </form>
       </div>
     </div>
-  </div>
+    <!-- End Checkout Area  -->
+  
+  </main>
+
 </div>
-</div>
+
 
 {% endblock content %}
 
 
+
+
 {% block js %}
-<!--   
+
 <script>
-  $( function() {
-      $( "#id_deadline" ).datepicker();
-    } );
-    </script> -->
+
+  // form 
+  const form = document.getElementById("instruction-form")
+
+  // btns
+
+  const sBtnPlus = document.getElementById("sources btn__plus")
+  const sBtnMinus = document.getElementById("sources btn__minus")
+
+  const ppBtnPlus = document.getElementById("pp btn__plus")
+  const ppBtnMinus = document.getElementById("pp btn__minus")
+
+  const cgBtnPlus = document.getElementById("cg btn__plus")
+  const cgBtnMinus = document.getElementById("cg btn__minus")
+
+
+
+  // values
+
+  const topic = document.getElementById("id_topic");
+  const subjectArea = document.getElementById("id_subject_area")
+  // not handled
+  const writerType = document.getElementById("id_writer_type");
+  const paperFormat = document.getElementById("id_paper_format");
+  const plagReport = document.getElementById("id_plag_report")
+  
+  // summary
+  const subjectSum = document.getElementById("subject")
+
+  subjectSum.textContent = subjectArea.options[0].value
+
+
+  const topicSum = document.getElementById("topic")
+  // not handled
+  const writer = document.getElementById("writer")
+  const sources = document.getElementById("sources")
+  const powerpoints = document.getElementById("powerpoints")
+  const graphs = document.getElementById("graphs")
+  const paperf = document.getElementById("paperformat")
+  const plag = document.getElementById("plag")
+  let price = document.getElementById("price")
+  let detPrice = document.getElementById("id_price")
+
+  
+
+ let currPrice = parseFloat(price.innerText)
+ detPrice.value = currPrice
+
+  const actualBtn = document.getElementById('id_files');
+
+  const fileChosen = document.getElementById('file_name');
+
+  actualBtn.addEventListener('change', function(){
+    fileChosen.textContent = this.files[0].name
+  })
+
+  // select field
+  const  gReport = document.getElementById("id_grammerly_report")
+  subjectArea.addEventListener("change", selectionOption)
+  writerType.addEventListener("change", selectionOption)
+  paperFormat.addEventListener("change", selectionOption)
+  plagReport.addEventListener("change", selectionOption)
+ gReport.addEventListener("change", selectionOption)
+
+  topic.addEventListener("keyup", function(e){
+    topicSum.textContent = e.target.value
+  })
+
+
+
+
+
+  function selectionOption(e){
+    if(e.target === subjectArea){
+      const index = subjectArea.options.selectedIndex
+      subjectSum.textContent = subjectArea.options[index].value
+    }
+    else if(e.target === writerType){
+      const index = writerType.options.selectedIndex
+      writer.textContent = writerType.options[index].innerText
+      let wr = (writerType.options[index].innerText).split(" ").join("").toLowerCase()
+      if(wr==="fastwriter"){
+        currPrice += 0.53
+        detPrice.value = currPrice.toFixed(2);
+      }else if(wr==="basicwriter"){
+        currPrice += 0.33
+        detPrice.value = currPrice.toFixed(2);
+      }
+      else if(wr==="prowriter"){
+        currPrice += 0.83
+        detPrice.value = currPrice.toFixed(2);
+      }
+      
+    }
+    else if(e.target === paperFormat){
+      const index = paperFormat.options.selectedIndex
+      paperf.textContent = paperFormat.options[index].innerText
+      if(index === 0){
+        currPrice += 0.06
+        detPrice.value = currPrice.toFixed(2);
+      }else if(index===1){
+        currPrice += 0.08
+        detPrice.value = currPrice.toFixed(2);
+      }
+      else if(index===2){
+        currPrice += 0.09
+        detPrice.value = currPrice.toFixed(2);
+      }
+
+      else if(index===3){
+        currPrice += 0.10
+        detPrice.value = currPrice.toFixed(2);
+      }
+    }
+
+    else if(e.target === plagReport){
+      const index = plagReport.options.selectedIndex
+      plag.textContent = plagReport.options[index].innerText
+
+      if(index === 0){
+        currPrice = 0.07;
+        detPrice.value = currPrice.toFixed(2);
+
+      }else if(index===1){
+        currPrice += 0.08
+        detPrice.value = currPrice.toFixed(2);
+      }
+      else if(index===2){
+        currPrice += 0.09
+        detPrice.value = currPrice.toFixed(2);
+      }
+    }
+
+    else if(e.target === gReport){
+      const index = gReport.options.selectedIndex
+
+      if(index === 0){
+        currPrice += 0.00;
+        detPrice.value = currPrice.toFixed(2);
+
+      }else if(index===1){
+        currPrice += 0.04
+        detPrice.value = currPrice.toFixed(2);
+      }
+    }
+  }
+
+  function addItemCount(e){
+    function targetField(field){
+      e.addEventListener("click", ()=>{
+        let num = parseInt(field.value) + 1
+        return num;
+      })
+    }
+  }
+  let source = document.getElementById("id_sources")
+  let sourceVal = parseInt(source.value)
+
+  let pp = document.getElementById("id_powerpoint_slides")
+  let pptVal = parseInt(pp.value)
+
+  let cg = document.getElementById("id_charts_graphs")
+  let cgVal = parseInt(cg.value)
+
+
+  function addItemCount(e){
+    e.preventDefault()
+    if(e.target === sBtnPlus){
+      sourceVal += 1
+      source.value = sourceVal
+      sources.textContent = sourceVal
+
+      currPrice += (0.53 * sourceVal)
+      detPrice.value = currPrice.toFixed(2)
+
+    } 
+    else if(e.target === ppBtnPlus){
+      pptVal += 1
+      pp.value=pptVal;
+      powerpoints.textContent = pptVal
+
+      currPrice += (0.53 * pptVal)
+      detPrice.value = currPrice.toFixed(2)
+    }
+    else if(e.target === cgBtnPlus){
+      cgVal += 1
+      cg.value=cgVal;
+      graphs.textContent = cgVal
+
+      currPrice += (0.53 * cgVal)
+      detPrice.value = currPrice.toFixed(2)
+    }
+  }
+
+  function reduceItemCount(e){
+    e.preventDefault()
+    if(e.target === sBtnMinus){
+      sourceVal -= 1
+      if((sourceVal < 1) && (source.value < 1)){
+        sourceVal =0
+        source.value=0
+        currPrice -= (0.53 * sourceVal).toFixed(2)
+        detPrice.value = currPrice.toFixed(2)
+        return;
+      }
+      source.value = sourceVal
+      sources.textContent = sourceVal
+
+      currPrice -= (0.53 * sourceVal).toFixed(2)
+      detPrice.value = currPrice.toFixed(2)
+
+  }
+  else if(e.target === ppBtnMinus){
+      pptVal -= 1
+      if((pptVal < 1) && (pp.value < 1)){
+        pptVal =0
+        pp.value=0
+        currPrice -= (0.53 * sourceVal)
+        detPrice.value = currPrice.toFixed(2)
+      }
+      pp.value=pptVal;
+      powerpoints.textContent = pptVal
+
+      currPrice -= (0.53 * pptVal)
+      detPrice.value = currPrice.toFixed(2)
+    }
+
+    else if(e.target === cgBtnMinus){
+      cgVal -= 1
+      if((cgVal < 1) && (cg.value < 1)){
+        cgVal =0
+        cg.value=0
+        currPrice -= (0.53 * cgVal)
+        detPrice.value = currPrice.toFixed(2)
+      }
+      cg.value=cgVal;
+      graphs.textContent = cgVal
+
+      currPrice -= (0.53 * cgVal)
+      detPrice.value = currPrice.toFixed(2)
+    }
+}
+
+  sBtnPlus.addEventListener("click", addItemCount)
+  sBtnMinus.addEventListener("click", reduceItemCount)
+
+  ppBtnPlus.addEventListener("click", addItemCount)
+  ppBtnMinus.addEventListener("click", reduceItemCount)
+
+  cgBtnPlus.addEventListener("click", addItemCount)
+  cgBtnMinus.addEventListener("click", reduceItemCount)
+
+
+
+  // let totalPrice = detPrice.value + currPrice
+
+
+// form.addEventListener("submit", (e)=>{
+//   e.preventDefault();
+//   console.log({currPrice})
+// })
+</script>
+
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+
 {% endblock js %}

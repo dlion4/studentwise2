@@ -1,3 +1,4 @@
+from traceback import print_stack
 from django.views.generic import View
 from django.shortcuts import render, redirect
 
@@ -13,6 +14,7 @@ class OrderTypeMixin(View):
 
     def post(self, request, **kwargs):
         bound_form = self.form_class(request.POST)
+        # print(bound_form)
         if bound_form.is_valid():
             instance = bound_form.save(commit=False)
             instance.student = self.model.objects.get(user=request.user)
@@ -31,6 +33,9 @@ class OrderItemMixin(View):
 
     def get(self, request, *args, **kwargs):
         context = {"form": self.form_class}
+        context.update({
+            "order": self.model.objects.last()
+        })
         return render(request, self.template_name, context)
 
     def post(self, request):
@@ -42,4 +47,5 @@ class OrderItemMixin(View):
             form.save()
             return redirect("order-payment")
         context = {'form': form}
+        print(form.errors)
         return render(request, self.template_name, context)

@@ -12,10 +12,10 @@ class OrderItemInline(admin.TabularInline):
 
 class OrderTypeAdmin(admin.ModelAdmin):
     inlines = [OrderItemInline]
-    list_display = ['student', 'service_type', 'academic_level',
-                    'paper_type', 'subject_area', 'pages', 'words', 'prices', 'deadline']
-    list_filter = ['deadline', 'student', 'service_type', 'paper_type']
-    search_fields = ['student', 'service_type']
+    list_display = ['student', 'task_type', 'academic_level',
+                    'task_type', 'pages', 'words', 'prices', 'deadline']
+    list_filter = ['deadline', 'student', 'task_type']
+    search_fields = ['student', 'task_type']
 
 
 admin.site.register(OrderType, OrderTypeAdmin)

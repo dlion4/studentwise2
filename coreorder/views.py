@@ -9,11 +9,10 @@ class OrderTypeView(OrderTypeMixin):
     template_name = "coreorder/ordertype_form.html"
     form_class = OrderTypeForm
 
-    
 
 class OrderItemView(OrderItemMixin):
     model = OrderType
     form_class = OrderItemForm
     template_name = 'coreorder/orderitem_form.html'
 
-    
+        

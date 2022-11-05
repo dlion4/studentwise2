@@ -1,0 +1,336 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans+Caption&family=Poppins:wght@700;800&display=swap');
+form{
+  font-family: 'Poppins', sans-serif;
+  font-family: 'PT Sans Caption', sans-serif;
+  margin-right: 20px;
+  margin-left:20px;
+  margin-top: 30px;
+}
+form .form__title{
+    font-weight: 800;
+    font-size: 28px;
+    color: #293462;
+    padding-bottom: 30px;
+    margin-left: 10px;
+}
+
+form input,
+select{
+  padding: 10px 15px;
+  /* border: 1px solid #6C5FA7; */
+}
+select:focus{
+  border: 1px solid #6C5FA7;
+  outline: none;
+}
+form p{
+  padding: 10px 0;
+}
+option{
+  text-transform: uppercase !important;
+  color: #2C4059;
+  font-size: 18px;
+  width: 100%;
+}
+.btn{
+  border: none;
+  outline: none;
+}
+.proceed__order__btn{
+  min-width: 200px;
+  padding: 20px 25px;
+  border-radius: 50px;
+  background-color: #FFDA61;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.proceed__order__btn:hover{
+color: #f7f9fc;
+}
+.d_flex{
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+.sum__price .col__price h3{
+font-weight: 800;
+}
+.form__subject__group .group__sub{
+    background: #ffffff;
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
+    width: 200px;
+    height: 120px;
+    cursor: pointer;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    position: relative;
+} 
+.form__subject__group .group__sub.active{
+    background: #293462;
+    color: #ffffff;
+}
+.group__sub input{
+background: #fff;
+width: 100%;
+height: 100%;
+-webkit-appearance: none;
+cursor: pointer;
+appearance: none;
+border-radius: 30px;
+z-index: 1;
+position: absolute;
+
+}
+
+.form__subject__group:first-child{margin-left: 15px;}
+
+.group__sub.active label{
+color: #ffffff !important;
+}
+.group__sub.active input{
+    background: transparent !important;
+}
+
+.group__sub label{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #293462 !important;
+    font-size: 18px;
+    padding: 20px 10px;
+    font-weight: 700;
+}
+@media (max-width: 400px) {
+.d_flex{
+  flex-direction: column !important;
+}
+.group__sub {
+  margin: 8px 0;
+}
+}
+
+.form__academic__level__group{
+width: 100%;
+padding: 20px;
+background: #ffffff;
+border-radius: 30px;
+
+}
+.form__academic__level__group .d_flex{
+box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
+padding: 30px 20px;
+}
+.form__custom__field__group,
+.form__academic__level__group .d_flex .group__acc{
+background: #ffffff;
+width: 200px;
+height: 100px;
+margin: 0 5px;
+position: relative;
+height: 100%;
+width: 100%;
+border-radius: 10px;
+cursor: pointer;
+
+}
+.group__acc{
+    cursor: pointer;
+}
+.group__acc input{
+width: 100%;
+height: 100%;
+padding: 10px 10px;
+-webkit-appearance: none;
+appearance: none;
+cursor: pointer;
+cursor: pointer;
+
+}
+
+.form__academic__level__group h3{
+margin-bottom: 18px;
+position: relative;
+display: flex;
+align-items: center;
+align-self: center;
+}
+.form__academic__level__group h3 span{
+background: #36506B;
+width: 20px;
+height: 20px;
+top: 50%;
+left: 30%;
+transform: translate(-50%, -30%);
+position: absolute;
+font-size: 10px;
+color: #fff;
+border-radius: 50%;
+cursor: pointer;
+}
+
+.group__acc.active label{
+color: #fff;
+letter-spacing: 1;
+}
+.group__acc{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 0;
+}
+.group__acc label{
+    position: absolute;
+    z-index: -1;
+    padding: 20px;
+    font-weight: 700;
+    font-size: 18px;
+    cursor: pointer; 
+    pointer-events: none;
+}
+.group__acc.active{
+background: #293462 !important;
+height: 100%;
+padding: 20px 10px;
+}
+
+.form__custom__field__group{
+    margin-top: 10px;
+    width: 100%;
+    background: #fff;
+    padding: 5px;
+    border: 1px solid #446592;
+    margin: 0 10px !important;
+}
+.form__custom__field__group select{
+    outline: none;
+    border: none;
+    width: 100%;
+    border-radius: none;
+    display: flex;
+    padding: 10px 20px;
+    text-transform: capitalize !important;
+    cursor: pointer;
+    -webkit-appearance: none !important;
+
+}
+.task__acc,
+.subject__task .task__acc{
+    margin-left: 10px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #333645;
+}
+
+/* date sum */
+.data__sum{
+    padding: 20px 0;
+    margin: 10px 20px;
+    width: 100%;
+}
+#id_pages{
+    font-weight: 800;
+    font-size: 16px;
+}
+#id_words{
+    display: none;
+}
+
+.data__sum .input{
+    border: 1px solid #293462;
+    padding: 15px 10px;
+    position: relative;
+    width: 200px;
+    border-radius: 10px;
+}
+.data__sum .input .btn{
+    font-weight: 800;
+    font-size: 19px;
+    color: #293462;
+    width: 30px;
+}
+.data__sum .input input{
+    width: 100px;
+    outline: none;
+    border: none;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateX(20px);
+}
+
+/* btns */
+
+
+.flex__q{
+    display: flex;
+
+    align-items: center;
+
+}
+.switch__p_words {
+    margin-top: 30px;
+    border-radius: 40px;
+    padding-left: 10px;
+}
+.switch__p_words .btn{
+    width: 100px;
+    height: 70px;
+    background-color: #ffffff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    row-gap: 10px;
+    font-weight: 700;
+    color: #333645;
+    border-radius: 20px;
+}
+.switch__p_words .btn.active{
+    background: #293462;
+    color: #ffffff;
+}
+.btn.p_swipper.active{
+    color: #ffffff;
+}
+
+.wrapper__deadline{
+    position: relative;
+    transform: translateX(-40px);
+    row-gap: 10px;
+}
+.input__deadline{
+    max-width: 220px;
+    float: left !important;
+    /* border:1px solid #2C4059; */
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
+    height: 70px;
+    border-radius: 10px;
+}
+
+.input__deadline input{
+    border: none;
+    outline: none;
+    height: 100%;
+    width: 110px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    font-weight: 700;
+    color: #293462;
+    margin-right: 20px;
+    pointer-events: all;
+    background: rgba(135, 134, 134, 0.2);
+}
+.input__deadline img{
+    padding-right: 20px;
+    font-size: 18px;
+}
+
+.btn__minus.disabled{
+    pointer-events: none;
+}
+

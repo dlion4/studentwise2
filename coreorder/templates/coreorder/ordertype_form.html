@@ -1,5 +1,5 @@
 {% extends parent_template|default:"coreorder/base_coreorder.html" %}
-
+{% load static %}
 {% block title %}
   {{ block.super }} - Oder
 {% endblock title %}
@@ -7,11 +7,12 @@
 
 {% block css %}
 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-  
+<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">-->
+<link rel="stylesheet" href="{% static 'css/order_price.css' %}">
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script> -->
+<!-- <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> --> 
+
 {% endblock css %}
 
 
@@ -30,27 +31,137 @@
       <!-- context -->
     </div>
     <div class="row pt-5 ps-2 pb-5">
-      <div class="col-sm-8">
+      <div class="col-sm-10">
         <div class="card card__is__shadow">
           <div class="card-body">
-            <form action="{% url 'order_type_assignment_type' %}" method="post">
+            <form action="{% url 'order_type_assignment_type' %}" method="post" id="priceCalculation">
               {% csrf_token %}
-              <h3 class="form__title">Paper Type</h3>
+              <h3 class="form__title">Calculate Place</h3>
               <div class="form-group">
-                {{form.as_p}}
+                <!--  ==================== subject type ====================  -->
+                <div class="form__subject__group d_flex">
+
+                  <div class="group__sub active" id="subGroup">
+                    <label for="">Academic Writing</label>
+                    <input type="radio" class="active" id="id_service_type" name="service_type" value="ACADEMICWRITING">
+                  </div>
+                  <div class="group__sub" id="subGroup">
+                    <label for="">Editing & ProofReading</label>
+                    <input type="radio" id="id_service_type" name="service_type" value="EDITTING&PROOFREADING">
+                  </div>
+                  <div class="group__sub" id="subGroup">
+                    <label for="">Calculations</label>
+                    <input type="radio" id="id_service_type" name="service_type" value="CALCULATIONS">
+                  </div>
+                </div>
+
+                <!--  ==================== academic level ==================== -->
+              <div>
+                {% if form.academic_level.errors %}
+                    <p>{{form.academic_level.errors}}</p>
+                {% endif %}
               </div>
-            <button type="submit">submit</button>
+                <div class="form__academic__level__group">
+
+                  <h3 class="level__acc">Academic Level </h3>
+                  
+
+                  <div class="d_flex">
+
+                    <div class="group__acc active">
+                      <label for="acc">High School</label>
+                      <input title="" type="radio" name="academic_level" id="id_academic_level" value="high school">
+                    </div>
+  
+                    <div class="group__acc">
+                      <label for="acc">College</label>
+                      <input title="" type="radio" name="academic_level" id="id_academic_level" value="college">
+                    </div>
+  
+                    <div class="group__acc">
+                      <label for="acc">Undergraduate</label>
+                      <input title="" type="radio" name="academic_level" id="id_academic_level" value="Undergraduate">
+                    </div>
+  
+                    <div class="group__acc">
+                      <label for="acc">Professional</label>
+                      <input title="" type="radio" name="academic_level" id="id_academic_level" value="professional">
+                    </div>
+                  </div>
+
+                </div>
+
+                <!-- =================== SUBJECT AREA =================== -->
+
+                <div class="subject__task">
+                  <h3 class="task__acc sub">Type of paper</h3>
+                  {% if form.task_type.error %}
+                    <p>{{form.task_type.error}}</p>
+                  {% endif %}
+                  <div class="form__custom__field__group">
+                    {{form.task_type}}
+                  </div>
+                  
+                </div>
+
+
+
+                <div class="data__sum d_flex">
+                  <div class="flex__q d_flex">
+                    <!-- main page and words -->
+                    <div class="quantity">
+                      <h3 class="task__acc">
+                        Quantity
+                      </h3>
+                      <div class="input d_flex">
+                        <button type="button" class="btn btn__minus" id="minus">&minus;</button>
+                        {{form.pages}}
+                        {{form.words}}
+                        <button type="button" class="btn btn__plus" id="plus">&plus;</button>
+                      </div>
+                    </div>
+
+                    <div class="switch__p_words">
+                      <button type="button" id="page_swipper" class="btn p_swipper active">pages</button>
+                      <button type="button" id="word_swipper" class="btn w_swipper">words</button>
+                    </div>
+
+                  </div>
+
+
+                  <div class="deadline">
+                    <h3 class="task__acc">
+                      Deadline
+                    </h3>
+
+                    <div class="wrapper__deadline d_Flex">
+                      <div class="input__deadline">
+                        <style>
+                        #id_deadline{
+                        pointer-events:all !important;
+                        }
+                        </style>
+                        {{form.deadline}}
+                      </div>
+
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            <div class="d_flex sum__price">
+              <div class="col__price">
+                <h3>Appx.price</h3>
+                <h3 class="price_summary">
+                  <span>$</span><span id="priceSpan">12</span>
+                  <span style="visibility: hidden;">
+                    {{form.prices}}
+                  </span>
+                </h3>
+              </div>
+              <button type="submit" class="btn proceed__order__btn">submit calculation &RightAngleBracket;</button>
+            </div>
             </form>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-4 ps-3">
-        <div class="card">
-          <div class="card-header py-4">
-            <h3>SUMMARY</h3>
-          </div>
-          <div class="display__sumary d-flex px-3 py-4">
-            Context
           </div>
         </div>
       </div>
@@ -65,8 +176,296 @@
 {% block js %}
 <!--   
 <script>
-  $( function() {
-      $( "#id_deadline" ).datepicker();
-    } );
-    </script> -->
+  
+  -->
+
+<script>
+
+
+const subjectList = {
+  ESSAY: 10.16,
+  ARTICLE: 11.01,
+  CONTENTWRITING: 10.99,
+  ANNOTATEDBIBLIOGRAPHY: 9.01,
+  ARGUMENTATIVEESSAY: 11.01,
+  ARTICLEREVIEW:10.09,
+  BUSINESSPLAN:12.01,
+  CAPSTONEPROJECT:10.91,
+  CASESTUDY:11.00,
+  COURSEWORK: 8.01
+}
+
+const WORK_TYPE = {
+  ACADEMICWRITING: 1.23,
+  EDITTINGPROOFREADING:0.93,
+  CALCULATIONS:1.60
+}
+
+
+
+  // papertype
+  let groupSub = document.querySelectorAll("#subGroup");
+  let inputSubType = document.querySelectorAll("#id_service_type")
+
+
+  // subject area
+
+  let subjectType = document.getElementById("id_task_type");
+
+  // subjectType.addEventListener("click", )
+ // paper
+
+  const group_ac = document.querySelectorAll(".group__acc")
+  const levelInput = document.querySelectorAll("#id_academic_level");
+
+  // const workType = document.getElementById("id_task_type");
+
+  // btns
+
+  const btnMinus = document.querySelector(".btn__minus#minus")
+  const btnPlus = document.querySelector(".btn__plus#plus")
+
+  // btn wp slider
+  const btnWordCount = document.getElementById("word_swipper")
+  const btnPageCount = document.getElementById("page_swipper")
+
+  // pages & words display
+
+  let wordInput = document.getElementById("id_words") // used already
+  let pageInput = document.getElementById("id_pages") // used alsdo
+  let price = document.getElementById("id_prices")
+  let priceDisplay = document.getElementById("priceSpan")
+
+
+  // change to integers
+
+
+  let pageCount = parseInt(pageInput.value)
+  let wordCount = parseInt(wordInput.value)
+  let priceValue = parseFloat(price.value)
+
+  price.value = pageCount * 23;
+  let initialPrice = price.value
+
+  // swipping pages and and words
+
+
+  inputSubType[0].checked  =true
+  
+  levelInput[0].checked = true;
+  
+  priceValue = parseFloat((levelPrice(levelInput[0].value).price) + WORK_TYPE.ACADEMICWRITING)
+
+
+  groupSub.forEach((work, index)=>{
+    work.addEventListener("change", function(){
+      let sumT = 0
+      if(inputSubType[index].checked){
+        work.classList.add("active")
+        inputSubType[index].classList.add("active")
+        let priceV = 0;
+        let val = inputSubType[index].value
+        let select;
+        if(val.includes("&")){
+          select = val.split("&").join("")
+
+          for(let [work, price] of Object.entries(WORK_TYPE)){
+            if(select === work){
+              priceValue += parseFloat(price)
+            }
+          }
+        }
+        else{
+          select = val;
+          for(let [work, price] of Object.entries(WORK_TYPE)){
+            if(select === work){
+              priceValue += parseFloat(price)
+            }
+          }
+        }
+        price.value = priceValue
+        priceDisplay.textContent = priceValue * pageCount
+        console.log({priceValue})
+      }
+    
+      else if(!inputSubType[index].checked){
+        work.classList.remove("active")
+        inputSubType[index].classList.remove("active")
+      }
+    
+    })
+    
+  })
+
+
+  group_ac.forEach((type, index)=>{
+    type.addEventListener("click", function(){
+      
+      if(levelInput[index].checked){
+        type.classList.add("active")
+        let result = levelPrice(levelInput[index].value)
+        priceValue += result.price
+        console.log({priceValue})
+        return;
+      }
+    })
+  })
+
+
+  priceDisplay.textContent = priceValue * pageCount
+
+
+  subjectType.onchange = ()=>{
+    for (let option of subjectType.options){
+      if(option.selected){
+        for(const [sub, price] of Object.entries(subjectList)){
+          if(sub === option.value.split(" ").join("")){
+            priceValue += price
+            initialPrice += priceValue
+            priceDisplay.textContent = priceValue * pageCount
+          }
+        }
+      }
+    }
+  }
+ 
+
+
+  function togglePageWords(e){
+    if (e.target === btnWordCount){
+
+      btnWordCount.classList.add("active")
+      btnPageCount.classList.remove("active")
+
+      wordInput.style.display = "block";
+      pageInput.style.display = "none";
+
+    } else if(e.target === btnPageCount){
+      btnPageCount.classList.add("active")
+      btnWordCount.classList.remove("active")
+
+      wordInput.style.display = "none";
+      pageInput.style.display = "block";
+    }
+  }
+
+ 
+  // btnWordCount.addEventListener("click", togglePages)
+  btnWordCount.addEventListener("click",togglePageWords)
+
+  btnPageCount.addEventListener("click", togglePageWords)
+
+
+  // pages & word count
+
+  function levelPrice(level){
+    if(level==="high school"){
+      let price = 0.35
+      return {price}
+    }
+    if(level==="college"){
+      let price = 0.45
+      return {price}
+    }
+    if(level==="Undergraduate"){
+      let price = 0.51
+      return {price}
+    }
+    if(level==="professional"){
+      let price = 0.63
+      return {price}
+    }
+  }
+
+
+ 
+  function getLevelPageTotalPrice(){
+    let sumTotal
+    levelInput.forEach((level, index)=>{
+      if(levelInput[index].checked){
+          let result = levelPrice(levelInput[index].value)
+          sumTotal = result.price
+        }
+      
+    })
+    return ({sumTotal});
+  }
+
+
+  function addPageWordPrice(){
+    // let level = subjectTypePrice
+    
+  
+    pageCount = pageCount + 1;
+    wordCount = pageCount * 273
+    priceValue += (pageCount * 23) * getLevelPageTotalPrice().sumTotal;
+    pageInput.value = pageCount;
+    pageInput.textContent = pageCount;
+    wordInput.value = wordCount;
+    wordInput.textContent = wordCount;
+    priceDisplay.textContent = priceValue.toFixed(2)
+    price.value = priceValue.toFixed(2)
+
+
+  }
+
+  btnPlus.addEventListener("click", addPageWordPrice)
+
+
+
+function subPageWordPrice(){
+  if(pageCount < 2  && wordCount < 550){
+      pageCount = 1;
+      wordCount = 275
+  }
+  else {
+      pageCount = pageCount - 1;
+      wordCount = pageCount * 273
+      priceValue = (pageCount * 23)*getLevelPageTotalPrice().sumTotal;
+
+      pageInput.value = pageCount;
+      pageInput.textContent = pageCount;
+
+      wordInput.value = wordCount;
+      wordInput.textContent = wordCount;
+
+
+      priceDisplay.textContent = priceValue.toFixed(2)
+
+      price.value = priceValue.toFixed(2)
+  }
+}
+
+  // function subPageWordPrice(){
+  //   if((pageCount < 1) && (wordCount<275)){
+  //     btnMinus.classList.add("disabled");
+     
+  //   } else{ 
+  //   if(btnMinus.classList.contains("disabled")){
+  //     console.log("yes")
+  //     pageCount = pageCount - 1;
+  //     wordCount = pageCount * 273
+  //     priceValue = (pageCount * 23)*getLevelPageTotalPrice().sumTotal;
+  //     pageInput.value = pageCount;
+  //     pageInput.textContent = pageCount;
+  //     wordInput.value = wordCount;
+  //     wordInput.textContent = wordCount;
+  //     priceDisplay.textContent = priceValue
+
+  //     price.value = priceValue
+  //     return ({
+  //       pageCount, 
+  //       wordCount,
+  //       priceValue
+  //     })
+  //   }
+    
+  //   }
+  // }
+
+  btnMinus.addEventListener("click", subPageWordPrice)
+
+
+</script>
+  
 {% endblock js %}

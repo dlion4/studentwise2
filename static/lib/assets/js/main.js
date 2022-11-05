@@ -455,4 +455,4 @@ const searchToggle = document.querySelector(".search-icon");
 
 
 
-}(jQuery)); 
+}()); 

@@ -59,4 +59,3 @@ def paymenthandler(request):
         except Exception as e:
             return HttpResponse({"error": e})
     return HttpResponseBadRequest()
-
